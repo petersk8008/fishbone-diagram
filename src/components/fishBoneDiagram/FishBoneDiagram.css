@@ -1,0 +1,89 @@
+/* Organize the categories into a flexbox layout */
+.cause-fish-bone-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem; /* Add spacing between categories */
+    position: relative;
+    z-index: 2; /* Ensure it is above the FishBoneMainBone */
+}
+
+.cause-fish-bone {
+    flex: 1 1 calc(33.333% - 1rem); /* Adjust the width of each category */
+    box-sizing: border-box;
+    border: 1px solid #ccc; /* Optional: Add a border for better visualization */
+    padding: 1rem;
+    border-radius: 8px; /* Optional: Add rounded corners */
+    background-color: #f9f9f9; /* Optional: Add a background color */
+}
+
+.category-header {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.cause-fish-bone-reasons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Add spacing between reasons */
+}
+
+.cause-reason {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Ensure FishBoneMainBone sits behind the cause-fish-bone-container and is centered */
+.outcome-fish-bone-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex: 1 1 calc(33.333% - 1rem); /* Adjust the width of each category */
+    box-sizing: border-box;
+    border: 1px solid #ccc; /* Optional: Add a border for better visualization */
+    padding: 1rem;
+    border-radius: 8px; /* Optional: Add rounded corners */
+    background-color: #f9f9f9; /* Optional: Add a background color */
+}
+
+/* Ensure the main container overlaps all its children centered and on top of each other */
+.fishbone-diagram {
+    position: relative;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.cause-fish-bone-reason {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+}
+
+.cause-fish-bone-reason:last-child {
+    border-bottom: none;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

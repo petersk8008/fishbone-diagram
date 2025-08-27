@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg fill="#000000" height="800px" width="800px" version="1.1" id="causeFishBoneDown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 833.258 481.625">
+  <defs>
+    <linearGradient id="boneGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B6C42;stop-opacity:1" />
+      <stop offset="33%" style="stop-color:#CBA47F;stop-opacity:1" />
+      <stop offset="66%" style="stop-color:#C2A385;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D6B894;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <path d="M 378.854 247.198 L 339.983 247.198 L 338.888 414.064 C 338.888 420.692 343.578 422.412 354.307 422.412 C 365.035 422.412 370.091 419.231 370.091 412.603 L 378.854 247.198 Z" style="stroke-width: 1px; fill: url(#boneGradient);"/>
+</svg>
