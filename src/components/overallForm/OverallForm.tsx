@@ -5,9 +5,10 @@ import OpenAI from 'openai';
 import { aiInstructions } from '../../ai/ai-instructions';
 import CauseCategoryForm from '../causes/causesForm/causeCategoryForm/CauseCategoryForm';
 import { Cause, FishboneFormData } from '../../types/types';
+require('dotenv').config();
 
 const openai = new OpenAI({
-    apiKey: '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',
+    apiKey: process.env.AI_API_KEY,
     dangerouslyAllowBrowser: true,
 });
 
