@@ -39,7 +39,7 @@ const FishboneDiagram: React.FC<FishboneDiagram> = ({ fishboneFormData, handleSa
             updated[category] = updated[category].filter(cause => cause.reason !== causeToRemove.reason);
 
             if (updated[category].length === 0) {
-                delete updated[category];
+                delete updated[category]; 
             }
 
             return [updated];

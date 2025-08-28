@@ -18,12 +18,14 @@ const CausesForm: React.FC<CausesFormProps> = ({onSubmit}) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
             <div>
                 <CauseInput value={cause} onChange={handleCauseChange} />
             </div>
 
-            <button type="submit">Submit</button>
+            <div style={{ display: 'flex', width: '100%', justifyContent: 'flex-end', marginTop: '10px' }}>
+                <button type="submit">Submit</button>
+            </div>
         </form>
     );
 };

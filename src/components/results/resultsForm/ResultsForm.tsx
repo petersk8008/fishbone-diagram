@@ -23,7 +23,9 @@ const ResultsForm: React.FC<ResultsFormProps> = ({onSubmit}) => {
                 <ResultsInput value={results} onChange={handleResultsChange} />
             </div>
 
-            <button type="submit">Submit</button>
+            <div style={{ display: 'flex', width: '100%', justifyContent: 'flex-end', marginTop: '10px' }}>
+                <button type="submit">Submit</button>
+            </div>
         </form>
     );
 };

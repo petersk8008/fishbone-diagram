@@ -19,7 +19,7 @@ const CauseCategoryDropdown: React.FC<CauseCategoryDropdownProps> = ({value, onC
 
     return (
         <div>
-            <label htmlFor="cause-category-dropdown">Cause Category: </label>
+            <label htmlFor="cause-category-dropdown">Choose the appropriate category: </label>
             <select
                 id="cause-category-dropdown"
                 value={selectedCategory}
