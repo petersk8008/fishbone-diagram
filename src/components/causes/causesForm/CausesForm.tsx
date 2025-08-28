@@ -14,7 +14,6 @@ const CausesForm: React.FC<CausesFormProps> = ({onSubmit}) => {
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        console.log('Cause:', cause);
         onSubmit(cause);
     };
 

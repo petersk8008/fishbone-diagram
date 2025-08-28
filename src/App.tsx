@@ -39,8 +39,13 @@ function App() {
   };
 
   const handleSaveDiagram = (completedDiagram: FishboneFormData) => {
-    const newDiagram = { id: Date.now(), ...completedDiagram };
-    setDiagramHistory((prevHistory) => [...prevHistory, newDiagram]);
+    const newDiagram = { id: completedDiagram.id ?? Date.now(), ...completedDiagram };
+    setDiagramHistory((prevHistory) => {
+      if (!prevHistory.find(diagram => diagram.id === newDiagram.id)) {
+        return [...prevHistory, newDiagram];
+      }
+      return prevHistory.map(diagram => diagram.id === newDiagram.id ? newDiagram : diagram);
+    });
 
     window.localStorage.setItem('diagramHistory', JSON.stringify([...diagramHistory, newDiagram]));
   };
@@ -58,34 +63,32 @@ function App() {
         </header>
 
         {/* Implement diagram history */}
-        <div className="diagram-history">
-            <h3>Diagram History</h3>
-                {diagramHistory.length === 0 ? (
-                    <p>No saved diagrams.</p>
-                ) : (
-                    <select onChange={(e) => {
-                      const selectedDiagram = diagramHistory.find(diagram => diagram.id === Number(e.target.value));
-                      console.log(selectedDiagram);
-                      if (selectedDiagram) {
-                        setFishboneFormData(selectedDiagram);
-                      }
-                    }}>
-                      <option value="" disabled selected>Select an existing Fishbone Diagram</option>
-                      {diagramHistory.map((diagram, index) => (
-                        <option key={index} value={diagram.id}>
-                          {diagram.outcome}
-                        </option>
-                      ))}
-                    </select>
-                )}
-        </div>
+        {diagramHistory.length !== 0 && (
+          <div className="diagram-history">
+              <h3>Diagram History</h3>
 
-        <div>
+              <select onChange={(e) => {
+                const selectedDiagram = diagramHistory.find(diagram => diagram.id === Number(e.target.value));
+                if (selectedDiagram) {
+                  setFishboneFormData(selectedDiagram);
+                }
+              }}>
+                <option value="" disabled selected>Select an existing Fishbone Diagram</option>
+                {diagramHistory.map((diagram, index) => (
+                  <option key={index} value={diagram.id}>
+                    {diagram.outcome}
+                  </option>
+                ))}
+              </select>
+          </div>
+        )}
+
+        <div className='overall-form'>
             <OverallForm setCauses={setCauses} setOutcome={setOutcome} causes={fishboneFormData.causes} fishBoneFormData={fishboneFormData} showCauseInput={showCauseInput} setShowCauseInput={setShowCauseInput} />
         </div>
 
         {fishboneFormData && fishboneFormData.outcome && (
-          <div>
+          <div className='app-fishbone'>
             <FishboneDiagram fishboneFormData={fishboneFormData} handleSaveDiagram={handleSaveDiagram} setFishboneFormData={setFishboneFormData} handleAddNewClause={handleAddNewCause} />
           </div>
         )}

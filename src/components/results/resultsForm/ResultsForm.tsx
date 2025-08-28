@@ -14,7 +14,6 @@ const ResultsForm: React.FC<ResultsFormProps> = ({onSubmit}) => {
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        console.log('Results:', results);
         onSubmit(results);
     };
 
