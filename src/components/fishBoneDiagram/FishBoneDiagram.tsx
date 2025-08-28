@@ -6,13 +6,14 @@ interface FishboneDiagram {
     fishboneFormData: FishboneFormData;
     handleSaveDiagram: (completedDiagram: FishboneFormData) => void;
     setFishboneFormData: React.Dispatch<React.SetStateAction<FishboneFormData>>;
+    handleAddNewClause: () => void;
 };
 
 interface fishboneCategory {
     [key: string]: Cause[];
 }
 
-const FishboneDiagram: React.FC<FishboneDiagram> = ({ fishboneFormData, handleSaveDiagram, setFishboneFormData }) => {
+const FishboneDiagram: React.FC<FishboneDiagram> = ({ fishboneFormData, handleSaveDiagram, setFishboneFormData, handleAddNewClause }) => {
     const [fishboneCausesByCategory, setFishboneCausesByCategory] = React.useState<fishboneCategory[]>([]);
 
     useEffect(() => {
@@ -54,7 +55,7 @@ const FishboneDiagram: React.FC<FishboneDiagram> = ({ fishboneFormData, handleSa
             <div className="buttons">
                 <button onClick={() => handleSaveDiagram(fishboneFormData)}>Save Diagram</button>
                 <button onClick={() => setFishboneFormData({ outcome: '', causes: [] })}>Clear Diagram</button>
-                <button className="add-cause-button" onClick={() => setFishboneFormData(prevState => ({ ...prevState, causes: [...prevState.causes, { reason: '', category: '' }] }))}>Add Cause</button>
+                <button className="add-cause-button" onClick={handleAddNewClause}>Add Cause</button>
             </div>
 
             <div className="fishbone-diagram-container">

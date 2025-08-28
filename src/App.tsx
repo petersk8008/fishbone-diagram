@@ -43,6 +43,13 @@ function App() {
     window.localStorage.setItem('diagramHistory', JSON.stringify([...diagramHistory, completedDiagram]));
   };
 
+  const handleAddNewCause = () => {
+    setFishboneFormData((prevState) => ({
+      ...prevState,
+      causes: [...prevState.causes, { reason: '', category: '' }],
+    }));
+  };
+
   return (
     <div className="App">
         <header className="App-header">
@@ -73,7 +80,7 @@ function App() {
 
         {fishboneFormData && fishboneFormData.causes.length > 0 && (
           <div>
-            <FishboneDiagram fishboneFormData={fishboneFormData} handleSaveDiagram={handleSaveDiagram} setFishboneFormData={setFishboneFormData} />
+            <FishboneDiagram fishboneFormData={fishboneFormData} handleSaveDiagram={handleSaveDiagram} setFishboneFormData={setFishboneFormData} handleAddNewClause={handleAddNewCause} />
           </div>
         )}
     </div>

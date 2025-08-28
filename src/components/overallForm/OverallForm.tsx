@@ -39,6 +39,33 @@ const OverallForm: React.FC<OverallFormProps> = ( {setCauses, setOutcome, causes
         };
     }, [isCauseSubmitted]);
 
+    useEffect(() => {
+        const updatedCauses = [...fishBoneFormData.causes];
+
+        setCauses(updatedCauses);
+
+        if (fishBoneFormData.outcome) {
+            setOutcome(fishBoneFormData.outcome);
+            setResults(fishBoneFormData.outcome);
+            setIsResultsSubmitted(true);
+        }
+
+    }, [fishBoneFormData]);
+
+    useEffect(() => {
+        const hasEmptyCause = causes.some(cause => cause.category.trim() === '');
+
+        if (!hasEmptyCause) {
+            setIsCauseSubmitted(true);
+            return;
+        }
+
+        if (hasEmptyCause) {
+            setIsCauseSubmitted(false);
+        }
+
+    }, [causes]);
+
     const handleResultsSubmit = (results: string) => {
         setIsResultsSubmitted(true);
         setOutcome(results);

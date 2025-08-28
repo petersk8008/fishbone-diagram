@@ -9,6 +9,7 @@ export interface aiRecommendation {
 };
 
 export interface FishboneFormData {
+    id?: number;
     outcome: string;
     causes: Cause[];
 };
