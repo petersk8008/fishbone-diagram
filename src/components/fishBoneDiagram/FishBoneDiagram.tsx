@@ -54,29 +54,31 @@ const FishboneDiagram: React.FC<FishboneDiagram> = ({ fishboneFormData, handleSa
             <div className="buttons">
                 <button onClick={() => handleSaveDiagram(fishboneFormData)}>Save Diagram</button>
                 <button onClick={() => setFishboneFormData({ outcome: '', causes: [] })}>Clear Diagram</button>
+                <button className="add-cause-button" onClick={() => setFishboneFormData(prevState => ({ ...prevState, causes: [...prevState.causes, { reason: '', category: '' }] }))}>Add Cause</button>
             </div>
 
-            <div className="outcome-fish-bone-container">
-                <h3 className='outcome-header'>Outcome/Result: </h3>
-                <p className="outcome-text">{fishboneFormData.outcome}</p>
-            </div>
+            <div className="fishbone-diagram-container">
+                <div className="fish-bone-head">
+                    <h3 className='outcome-header'>Outcome/Result: </h3>
+                    <p className="outcome-text">{fishboneFormData.outcome}</p>
+                </div>
 
-            <div className="cause-fish-bone-container">
-                {fishboneCausesByCategory.length > 0 && Object.entries(fishboneCausesByCategory[0]).map(([category, causes], i) => (
-                    <div className={`cause-fish-bone cause-fish-bone-${i}`} key={category}>
-                        <h3 className='category-header'>{category}</h3>
+                <div className="backbone"></div>
 
-                        <div className="cause-fish-bone-reasons">
+                <div className="fish-bone-rib-container">
+                    {fishboneCausesByCategory.length > 0 && Object.entries(fishboneCausesByCategory[0]).map(([category, causes], i) => (
+                        <div className={`fish-bone-rib rib-${i}`} key={category}>
+                            <div className='category-header'>{category}</div>
+
                             {causes.map((cause, index) => (
-                                <div className={`cause-fish-bone-reason cause-fish-bone-reason-${index}`} key={`${category}-${index}`}>
-                                    <p className='cause-reason'>{cause.reason}</p>
-
+                                <div className={`fish-bone-subrib fish-bone-subrib-${index}`} key={`${category}-${index}`}>
                                     <button className='remove-cause-button' style={{ background: 'none', border: 'none', color: 'red', cursor: 'pointer' }} onClick={(event) => handleDeleteCauseFromCategory(category, cause, event)}>X</button>
+                                    <p className='cause-reason'>{cause.reason}</p>
                                 </div>
                             ))}
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     );
