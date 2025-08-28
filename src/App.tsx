@@ -10,6 +10,7 @@ function App() {
     causes: [],
   });
   const [diagramHistory, setDiagramHistory] = React.useState<FishboneFormData[]>([]);
+  const [showCauseInput, setShowCauseInput] = React.useState<boolean>(false);
 
   useEffect(() => {
     getDiagramHistory();
@@ -38,16 +39,14 @@ function App() {
   };
 
   const handleSaveDiagram = (completedDiagram: FishboneFormData) => {
-    setDiagramHistory((prevHistory) => [...prevHistory, completedDiagram]);
+    const newDiagram = { id: Date.now(), ...completedDiagram };
+    setDiagramHistory((prevHistory) => [...prevHistory, newDiagram]);
 
-    window.localStorage.setItem('diagramHistory', JSON.stringify([...diagramHistory, completedDiagram]));
+    window.localStorage.setItem('diagramHistory', JSON.stringify([...diagramHistory, newDiagram]));
   };
 
   const handleAddNewCause = () => {
-    setFishboneFormData((prevState) => ({
-      ...prevState,
-      causes: [...prevState.causes, { reason: '', category: '' }],
-    }));
+      setShowCauseInput(true);
   };
 
   return (
@@ -64,21 +63,28 @@ function App() {
                 {diagramHistory.length === 0 ? (
                     <p>No saved diagrams.</p>
                 ) : (
-                    <ul>
-                        {diagramHistory.map((diagram, index) => (
-                            <li key={index} onClick={() => setFishboneFormData(diagram)}>
-                                Outcome: {diagram.outcome}
-                            </li>
-                        ))}
-                    </ul>
+                    <select onChange={(e) => {
+                      const selectedDiagram = diagramHistory.find(diagram => diagram.id === Number(e.target.value));
+                      console.log(selectedDiagram);
+                      if (selectedDiagram) {
+                        setFishboneFormData(selectedDiagram);
+                      }
+                    }}>
+                      <option value="" disabled selected>Select an existing Fishbone Diagram</option>
+                      {diagramHistory.map((diagram, index) => (
+                        <option key={index} value={diagram.id}>
+                          {diagram.outcome}
+                        </option>
+                      ))}
+                    </select>
                 )}
         </div>
 
         <div>
-            <OverallForm setCauses={setCauses} setOutcome={setOutcome} causes={fishboneFormData.causes} fishBoneFormData={fishboneFormData} />
+            <OverallForm setCauses={setCauses} setOutcome={setOutcome} causes={fishboneFormData.causes} fishBoneFormData={fishboneFormData} showCauseInput={showCauseInput} setShowCauseInput={setShowCauseInput} />
         </div>
 
-        {fishboneFormData && fishboneFormData.causes.length > 0 && (
+        {fishboneFormData && fishboneFormData.outcome && (
           <div>
             <FishboneDiagram fishboneFormData={fishboneFormData} handleSaveDiagram={handleSaveDiagram} setFishboneFormData={setFishboneFormData} handleAddNewClause={handleAddNewCause} />
           </div>

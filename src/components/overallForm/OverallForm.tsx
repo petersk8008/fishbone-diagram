@@ -15,11 +15,13 @@ const openai = new OpenAI({
 interface OverallFormProps {
     setCauses: (causes: Cause[]) => void;
     setOutcome: (outcome: string) => void;
+    showCauseInput: boolean;
+    setShowCauseInput: (show: boolean) => void;
     causes: Cause[];
     fishBoneFormData: FishboneFormData;
 };
 
-const OverallForm: React.FC<OverallFormProps> = ( {setCauses, setOutcome, causes, fishBoneFormData}) => {
+const OverallForm: React.FC<OverallFormProps> = ( {setCauses, setOutcome, causes, fishBoneFormData, showCauseInput, setShowCauseInput}) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [results, setResults] = useState<string>('');
     const [cause, setCause] = useState<string>('');
@@ -30,41 +32,12 @@ const OverallForm: React.FC<OverallFormProps> = ( {setCauses, setOutcome, causes
     const [isCategorySubmitted, setIsCategorySubmitted] = useState<boolean>(false);
 
     useEffect(() => {
-        if (isCauseSubmitted) {
-            setIsCauseInputSubmitted(false);
-            setIsCategorySubmitted(false);
-            setCause('');
-            setAiRecommendation({ category: '', explanation: '' });
-            setIsCauseSubmitted(false);
-        };
-    }, [isCauseSubmitted]);
-
-    useEffect(() => {
-        const updatedCauses = [...fishBoneFormData.causes];
-
-        setCauses(updatedCauses);
-
         if (fishBoneFormData.outcome) {
-            setOutcome(fishBoneFormData.outcome);
             setResults(fishBoneFormData.outcome);
             setIsResultsSubmitted(true);
         }
 
     }, [fishBoneFormData]);
-
-    useEffect(() => {
-        const hasEmptyCause = causes.some(cause => cause.category.trim() === '');
-
-        if (!hasEmptyCause) {
-            setIsCauseSubmitted(true);
-            return;
-        }
-
-        if (hasEmptyCause) {
-            setIsCauseSubmitted(false);
-        }
-
-    }, [causes]);
 
     const handleResultsSubmit = (results: string) => {
         setIsResultsSubmitted(true);
@@ -83,6 +56,12 @@ const OverallForm: React.FC<OverallFormProps> = ( {setCauses, setOutcome, causes
 
         setCauses([...causes, newCause]);
         setIsCauseSubmitted(true);
+        setIsCauseInputSubmitted(false);
+        setIsCategorySubmitted(false);
+        setCause('');
+        setAiRecommendation({ category: '', explanation: '' });
+        setIsCauseSubmitted(false);
+        setShowCauseInput(false);
     };
 
     async function interactWithAssistant(causeExplanation: string) {
@@ -124,16 +103,17 @@ const OverallForm: React.FC<OverallFormProps> = ( {setCauses, setOutcome, causes
         return <ResultsForm onSubmit={handleResultsSubmit} />;
     };
 
-    if (!isCategorySubmitted && isCauseInputSubmitted) {
+    if (!isCategorySubmitted && isCauseInputSubmitted && showCauseInput) {
         return <CauseCategoryForm openai={openai} aiRecommendation={aiRecommendation} onSubmit={handleEntireCauseSubmit} />;
     };
 
-    if (!isCauseInputSubmitted) {
+    if (!isCauseInputSubmitted && showCauseInput) {
         return <CausesForm onSubmit={handleCauseInputSubmit} />;
     };
 
     return (
-        <div>Loading...</div>
+        <>
+        </>
     );
 };
 
